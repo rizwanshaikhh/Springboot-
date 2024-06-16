@@ -1,0 +1,72 @@
+package com.model;
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import lombok.Data;
+
+@Entity
+@Data
+public class User {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+	@NotNull(message = "Name Can Not Be Empty")
+	@Size(min=3,message="person name should create atleast 3character")
+	private String userName;
+	
+	@Column(name="VotingCardNumber",unique=true,length=30)
+	@NotNull(message = "Voting Number Can Not Be Empty")
+	@Size(min=10, max=10, message = "Voter Number should be exact 10 letters and it should be combination of letters and numbers")
+    private String userVotingCardNumber;
+	
+	@NotNull(message = "Address Can Not Be Empty")
+	private String userAddress;
+	
+	@Column(name="MobileNumber", unique=true)
+	@NotNull(message = " Mobile Number Can Not Be Empty")
+	@Pattern(regexp="^[6-9][0-9]{9}$")
+	@Size(min=10, max=10, message ="Mobile Number Should Contains 10 Digits")
+    private String userMobileNumber;
+	
+	@Column(name="emailid",unique=true,length=25)
+	@NotEmpty
+	@Email(message="Email is not valid")
+	private String userEmail;
+	
+	@Column(name="password",length=20)
+	@NotNull(message = "Password Can Not Be Empty")
+	@Size(min=8,message="password length must be 8 characters and upparcase,lowercase,digit")
+	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
+    private String userPassword;
+    
+	@NotNull
+    private LocalDate userDateOfBirth;
+    
+    @NotNull
+    @Size(min=4,message="person gender should have atleast 4 characters")
+    private String userGender;
+    	
+	@NotNull
+	private String userRole;
+	
+	private String status;
+	
+	private boolean isActivateAccount;
+}
+
+/*
+ * @Column(name = "isactivateaccount", length = 20)
+private boolean isActivateAccount;
+ */

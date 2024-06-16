@@ -1,0 +1,50 @@
+package com.controllers;
+
+@RestController
+@RequestMapping("/party")
+@CrossOrigin(origins = "http://localhost:4200")
+@Transactional
+public class PartyController {
+    @Autowired
+    
+    private PartyService partyService;
+    @Autowired
+    private PartyRepository pRepository;
+
+    @PostMapping("/addparty")
+    public String addParty(@RequestBody Party party) {
+        partyService.addParty(party);
+        return "Party added successfully";
+    }
+
+    @GetMapping("/partylist")
+    public List<Party> getAllParties() {
+        return partyService.getAllParties();
+    }
+    
+    @GetMapping("/findByName/{partyName}")
+    public List<Party> getPartyByName(@PathVariable String partyName) {
+        return partyService.getPartyByName(partyName);
+    }
+
+    @GetMapping("/findByLogo/{partyLogo}")
+    public List<Party> getPartyByLogo(@PathVariable String partyLogo) {
+        return partyService.getPartyByLogo(partyLogo);
+    }
+
+    @DeleteMapping("/deleteparty/{partyId}")
+    public String deletePartyById(@PathVariable Long partyId) {
+        partyService.deletePartyById(partyId);
+        return "Party deleted successfully";
+    }
+   
+    @PutMapping("/edit/{partyId}")
+    public ResponseEntity<Party>updateParty(@Valid @PathVariable("partyId") long partryId, @RequestBody Party party){
+        return new ResponseEntity<Party>(partyService.updateParty(party, partryId), HttpStatus.OK);
+    }
+    
+    @GetMapping("/findByPartyId/{partyId}")
+    public Party getPartyByName(@PathVariable Long partyId) {
+        return pRepository.findById(partyId).get();
+    }
+}

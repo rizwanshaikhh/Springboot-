@@ -1,0 +1,13 @@
+package com.ts;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class OnlineVotingApplicationTests {
+
+	public static void main(String[] args) {
+		SpringApplication.run(OnlineVotingApplication.class, args);
+	}
+
+}

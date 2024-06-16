@@ -1,0 +1,72 @@
+package com.controllers;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dao.PartyDao;
+import com.dao.PartyRepository;
+import com.model.Party;
+
+@RestController
+@RequestMapping("/party")
+@CrossOrigin(origins = "http://localhost:4200")
+@Transactional
+public class PartyController {
+    @Autowired
+    
+    private PartyDao partydao;
+    @Autowired
+    private PartyRepository pRepository;
+
+    @PostMapping("/addparty")
+    public String addParty(@RequestBody Party party) {
+    	partydao.addParty(party);
+        return "Party added successfully";
+    }
+
+    @GetMapping("/partylist")
+    public List<Party> getAllParties() {
+        return partydao.getAllParties();
+    }
+    
+    @GetMapping("/findByName/{partyName}")
+    public List<Party> getPartyByName(@PathVariable String partyName) {
+        return partydao.getPartyByName(partyName);
+    }
+
+    @GetMapping("/findByLogo/{partyLogo}")
+    public List<Party> getPartyByLogo(@PathVariable String partyLogo) {
+        return partydao.getPartyByLogo(partyLogo);
+    }
+
+    @DeleteMapping("/deleteparty/{partyId}")
+    public String deletePartyById(@PathVariable Long partyId) {
+    	partydao.deletePartyById(partyId);
+        return "Party deleted successfully";
+    }
+   
+    @PutMapping("/edit/{partyId}")
+    public ResponseEntity<Party>updateParty(@Valid @PathVariable("partyId") long partryId, @RequestBody Party party){
+        return new ResponseEntity<Party>(partydao.updateParty(party, partryId), HttpStatus.OK);
+    }
+    
+    @GetMapping("/findByPartyId/{partyId}")
+    public Party getPartyByName(@PathVariable Long partyId) {
+        return pRepository.findById(partyId).get();
+    }
+}

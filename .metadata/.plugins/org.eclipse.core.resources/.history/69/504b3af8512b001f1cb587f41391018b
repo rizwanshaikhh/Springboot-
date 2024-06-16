@@ -1,0 +1,32 @@
+package com.dao;
+
+@Service
+public class ElectionDao {
+	 @Autowired
+	    private ElectionRepository electionRepository;
+	    
+	    public List<Election> getAllElections() {
+	        return electionRepository.findAll();
+	    }
+
+	    public Election addElection(Election election) {
+	        return electionRepository.save(election);
+	    }
+	    
+	    public Optional<Election> getElectionById(Long electionId) {
+	        return electionRepository.findById(electionId);
+	    }
+
+	    public List<Election> getElectionByName(String electionName) {
+	        return electionRepository.findByElectionName(electionName);
+	    }
+
+	    public List<Election> getElectionByDate(LocalDate electionDate) {
+	        return electionRepository.findByElectionDate(electionDate);
+	    }
+
+	    public void deleteElectionById(Long electionId) {
+	        electionRepository.deleteById(electionId);
+	    }
+
+}

@@ -1,0 +1,9 @@
+package com.dao;
+
+public interface PartyRepository extends JpaRepository<Party, Long> {
+	
+	public List<Party> findByPartyName(String partyName);
+	public List<Party> findByPartyLogo(String partyLogo);
+    public void deleteByPartyId(Long partyId);
+
+}

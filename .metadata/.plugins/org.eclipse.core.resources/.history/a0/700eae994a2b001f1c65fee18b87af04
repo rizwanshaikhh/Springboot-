@@ -1,0 +1,16 @@
+package com.model;
+
+@Entity
+@Data
+public class Election {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long electionId;
+
+    @NotNull
+    @Column(name="ElectionName", unique=true)
+    private String electionName;
+    
+    @NotNull
+    private LocalDate electionDate;
+}

@@ -1,0 +1,8 @@
+package com.dao;
+
+public interface ElectionRepository extends JpaRepository<Election, Long> {
+	
+	 List<Election> findByElectionName(String electionName);
+	    
+	 List<Election> findByElectionDate(LocalDate electionDate);
+}
